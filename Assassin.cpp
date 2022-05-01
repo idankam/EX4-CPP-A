@@ -1,23 +1,23 @@
-//
-// Created by Eitan Kats on 25/04/2022.
-//
-#include "Assassin.hpp"
 #include "exception"
+#include "Assassin.hpp"
 
 namespace coup {
 
-    Assassin::Assassin(Game &currGame, const std::string &name)
-            : Player{currGame, name} {
-        this->coupCost = 3;
+    Assassin::Assassin(Game &game, const string &playerName)
+            : Player{game, playerName} {
+        this->needToCoup = 3;
     }
 
-    void Assassin::coup(Player &other_player) {
-        if (this->_coins < this->coupCost) {
-//            throw std::runtime_error("insufficient coins");
+    string Assassin::role() const { return "Assassin"; }
+
+    void Assassin::coup(Player &player) {
+        this->checkCanMove();
+        this->checkNeedToCoup();
+        if (this->needToCoup > this->_numOfCoins) {
+            throw invalid_argument("not enough coins!");   
         }
+        this->_game.nextPlayerTurn();
     }
 
-    std::string Assassin::role() const {
-        return "Assassin";
-    }
+    
 }

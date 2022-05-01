@@ -1,5 +1,4 @@
-#ifndef EX4_CPP_PLAYER_HPP
-#define EX4_CPP_PLAYER_HPP
+#pragma once
 
 #include "string"
 #include "Game.hpp"
@@ -9,30 +8,24 @@ namespace coup {
     class Player {
 
     protected:
+        int needToCoup = 7;
+        
         std::string _name;
-        int _coins;
-        Game &_currGame;
-        int coupCost = 7;
-
-        //the protected constructor prevents instance creation
-        Player(Game &currGame, const std::string& name);
-
-        void isEligibleForMove();
+        int _numOfCoins;
+        Game &_game;
+        
+        Player(Game &game, const std::string& playerName);
+        void checkCanMove();
 
 
     public:
 
-
-        void income();
-
-        void foreign_aid();
-
-        virtual void coup(Player &other_player);
-
+        
         virtual std::string role() const = 0;
-
         int coins() const;
+        virtual void coup(Player &other_player);
+        void income();
+        void foreign_aid();
+        void checkNeedToCoup();
     };
 }
-
-#endif //EX4_CPP_PLAYER_HPP

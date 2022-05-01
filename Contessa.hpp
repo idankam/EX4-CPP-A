@@ -1,21 +1,13 @@
-//
-// Created by Eitan Kats on 25/04/2022.
-//
-
-#ifndef EX4_CPP_CONTESSA_HPP
-#define EX4_CPP_CONTESSA_HPP
-
+#pragma once
 #include "Player.hpp"
 
 namespace coup {
 
     class Contessa : public Player {
+        
     public:
-        Contessa(Game &currGame, const std::string &name);
-
-        void block(Player &other_player);
-
-        std::string role() const override;
+        Contessa(Game &Game, const string &playerName);
+        string role() const override;
+        void block(Player &other_player);        
     };
 }
-#endif //EX4_CPP_CONTESSA_HPP

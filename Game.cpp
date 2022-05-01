@@ -1,32 +1,37 @@
-#include "Game.hpp"
 #include "exception"
 #include "vector"
-
+#include "Game.hpp"
 
 namespace coup {
 
-
-    std::string Game::turn() {
-        return this->_currPlayers[this->currPlayer];
+    vector<string> Game::players() {
+        return this->_players;
     }
 
-    std::vector<std::string> Game::players() {
-        return this->_currPlayers;
+    string Game::turn() {
+        return this->_players[this->playerTurn];
     }
 
-    void Game::addPlayer(const std::string &name) {
-        this->_currPlayers.push_back(name);
-    }
-
-    std::string Game::winner() {
-        if (this->_currPlayers.size() > 1) {
-//            throw std::runtime_error("game is ongoing");
+    void Game::nextPlayerTurn() {
+        if (this->_players.size() < 2) {
+            throw invalid_argument("No enough players.");
         }
-        return this->_currPlayers[0];
+        this->playerTurn++;
+        this->playerTurn = this->playerTurn % this->_players.size();
     }
 
-    void Game::passTurn() {
-        ++this->currPlayer;
-        this->currPlayer = this->currPlayer % this->_currPlayers.size();
+    void Game::addPlayer(const string &playerName) {
+        if(this->_players.size() == 6){
+            throw invalid_argument("Max players, can't add more.");
+        }
+        this->_players.push_back(playerName);
     }
+
+    string Game::winner() {
+        if (this->_players.size() >= 2) {
+            throw invalid_argument("No winner yet.");
+        }
+        return this->_players[0];
+    }
+
 }

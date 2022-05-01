@@ -1,26 +1,28 @@
-#ifndef EX4_CPP_GAME_HPP
-#define EX4_CPP_GAME_HPP
+#ifndef GAME
+#define GAME
 
-#include "vector"
 #include "string"
+#include "vector"
+#include <iostream>
+
+using namespace std;
 
 namespace coup {
     class Game {
+
     private:
-        std::vector<std::string> _currPlayers;
-        size_t currPlayer = 0;
+
+        vector<string> _players;
+        size_t playerTurn = 0;
+
     public:
-
-        void addPlayer(const std::string& name);
-
-        std::vector<std::string> players();
-
-        std::string turn();
-
-        std::string winner();
-
-        void passTurn();
+        
+        vector<string> players();
+        string turn();
+        void nextPlayerTurn();
+        string winner();
+        void addPlayer(const string& playerName);
+ 
     };
 }
-
-#endif //EX4_CPP_GAME_HPP
+#endif

@@ -1,22 +1,14 @@
-//
-// Created by Eitan Kats on 25/04/2022.
-//
-
 #include "Ambassador.hpp"
 
 namespace coup {
 
-    Ambassador::Ambassador(Game &currGame, const std::string &name) : Player{currGame, name} {}
+    Ambassador::Ambassador(Game &game, const std::string &playerName) : Player{game, playerName} {}
+    std::string Ambassador::role() const { return "Ambassador";}
 
-    void Ambassador::block(const Player &other_player) {
-
+    void Ambassador::transfer(const Player &player1, const Player &player2) {
+        this->checkCanMove();
+        this->checkNeedToCoup();
+        this->_game.nextPlayerTurn();
     }
-
-    void Ambassador::transfer(const Player &first_player, const Player &second_player) {
-
-    }
-
-    std::string Ambassador::role() const {
-        return "Ambassador";
-    }
+    void Ambassador::block(const Player &player) {}    
 }

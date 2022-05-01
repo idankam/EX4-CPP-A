@@ -1,21 +1,19 @@
-//
-// Created by Eitan Kats on 25/04/2022.
-//
 #include "Captain.hpp"
 
 namespace coup {
-    Captain::Captain(Game &currGame, const std::string& name) :
-            Player{currGame, name} {}
+    Captain::Captain(Game &game, const string& playerName) :
+            Player{game, playerName} {}
 
-    void Captain::block(Player &other_player) {
-
+    void Captain::block(Player &player) {
+        if(player.role() != "Captain"){
+            throw invalid_argument("can't block!");   
+        }
     }
 
-    void Captain::steal(Player &other_player) {
-
+    void Captain::steal(Player &player) {
+        this->checkCanMove();
+        this->checkNeedToCoup();
+        this->_game.nextPlayerTurn();
     }
-
-    std::string Captain::role() const {
-        return "Captain";
-    }
+    string Captain::role() const { return "Captain"; }
 }

@@ -1,19 +1,13 @@
-#ifndef EX4_CPP_DUKE_HPP
-#define EX4_CPP_DUKE_HPP
-
+#pragma once
 #include "Player.hpp"
 
 namespace coup {
     class Duke : public Player {
 
     public:
-        Duke(Game &currGame, const std::string &name);
-
+        Duke(Game &game, const string &playerName);
+        void block(Player &player);
         void tax();
-
-        void block(Player &toBlock);
-
-        std::string role() const override;
+        string role() const override;
     };
 }
-#endif //EX4_CPP_DUKE_HPP

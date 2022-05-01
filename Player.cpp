@@ -3,40 +3,50 @@
 #include "exception"
 
 namespace coup {
-    Player::Player(Game &currGame, const std::string &name)
-            : _currGame(currGame), _name(name), _coins(0) {
-        this->_currGame.addPlayer(name);
-    }
 
-    void Player::isEligibleForMove() {
-        if (this->_currGame.turn() != this->_name) {
-//            throw std::runtime_error("Not your turn");
-        }
-    }
-
-    void Player::income() {
-        this->isEligibleForMove();
-        ++this->_coins;
-        this->_currGame.passTurn();
+    Player::Player(Game &game, const std::string& playerName)
+            : _game(game), _name(playerName), _numOfCoins(0) {
+        this->_game.addPlayer(playerName);
     }
 
     int Player::coins() const {
-        return this->_coins;
+        return this->_numOfCoins;
+    }
+
+    void Player::income() {
+        this->checkCanMove();
+        this->checkNeedToCoup();
+        ++this->_numOfCoins;
+        this->_game.nextPlayerTurn();
     }
 
     void Player::foreign_aid() {
-        this->isEligibleForMove();
-        this->_coins += 2;
-        this->_currGame.passTurn();
+        this->checkCanMove();
+        this->checkNeedToCoup();
+        this->_numOfCoins = 2+this->_numOfCoins;
+        this->_game.nextPlayerTurn();
     }
 
     void Player::coup(Player &other_player) {
-        this->isEligibleForMove();
-        if (this->_coins < this->coupCost) {
-//            throw std::runtime_error("insufficient amount of coins");
+        this->checkCanMove();
+        if (this->needToCoup > this->_numOfCoins) {
+            throw invalid_argument( "You need more coins!");
         }
-        this->_coins -= this->coupCost;
-        this->_currGame.passTurn();
+        this->_numOfCoins -= this->needToCoup;
+        this->_game.nextPlayerTurn();
     }
 
+    void Player::checkCanMove() {
+        if (this->_game.turn() != this->_name) {
+            cout << this->_game.turn();
+            cout << this->_name;
+            throw invalid_argument( "Wait to your turn!");
+        }
+    }
+
+    void Player::checkNeedToCoup(){
+        if(this->_numOfCoins >= 10){
+            throw invalid_argument( "You must coup!");
+        }
+    }
 }
