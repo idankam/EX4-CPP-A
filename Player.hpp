@@ -1,7 +1,3 @@
-//
-// Created by Eitan Kats on 25/04/2022.
-//
-
 #ifndef EX4_CPP_PLAYER_HPP
 #define EX4_CPP_PLAYER_HPP
 
